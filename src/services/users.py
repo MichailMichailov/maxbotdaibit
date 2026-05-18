@@ -2,6 +2,7 @@ import os
 import json
 from datetime import datetime, timedelta, timezone
 from config import FILE_PATH, file_lock
+from services.amoservice import find_contact_by_phone
 
 
 def load_users():
@@ -26,8 +27,9 @@ def save_users(data):
     os.replace(tmp_path, FILE_PATH)
 
 async def add_user(user_id: int, chat_id: int, first_name: str = None,
-                   last_name: str = None, username: str = None, payload: str = None):
+                   last_name: str = None, username: str = None, phone:str = None, payload: str = None):
     async with file_lock:
+        # print(find_contact_by_phone("89521082823"))
         users = load_users()
         key = str(user_id)
         if key in users:
